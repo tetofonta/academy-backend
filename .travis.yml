@@ -3,38 +3,33 @@ env:
   - CC_TEST_REPORTER_ID=19cd4efa77fdc8ca82e9308787980d32ec2282b88cd4d6f91d00528790b7fa09
 cache:
   directories:
-    - $HOME/.m2
-
+  - "$HOME/.m2"
 before_install:
-  - sudo apt-get install -y tree
-
+- sudo apt-get install -y tree
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 language: java
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-  - JACOCO_SOURCE_PATH=src/main/java
-  - cp target/jacoco-ut/jacoco.xml ./jacoco.xml
-  - ./cc-test-reporter format-coverage -t jacoco -d --exit-code $TRAVIS_TEST_RESULT
-  - pwd
-  - tree -L 3
-  - ./cc-test-reporter format-coverage -t jacoco target/jacoco-ut/jacoco.xml
-  - ./cc-test-reporter upload-coverage
+- bash <(curl -s https://codecov.io/bash)
+- JACOCO_SOURCE_PATH=src/main/java
+- cp target/jacoco-ut/jacoco.xml ./jacoco.xml
+- "./cc-test-reporter format-coverage -t jacoco -d --exit-code $TRAVIS_TEST_RESULT"
+- pwd
+- tree -L 3
+- "./cc-test-reporter format-coverage -t jacoco target/jacoco-ut/jacoco.xml"
+- "./cc-test-reporter upload-coverage"
 jdk: oraclejdk8
-
 deploy:
   provider: releases
   api_key:
-    secure: i7t+YD5DDk98jp73Aft1J2Prit8iPO7JFSThpz9snTS9EwFYVnA4NMs/+T2pI4OWHEUkP+o3I3HSK87shXmsygzJghMsOk6mibXCpIWRrPbSsmRPNy9cfLbtTyMmXgc1CRPQEMCilnlNZJK6lXXysZk7eEozx0ptjH+Kuh9rEJWD9HA58Pn9h4r/R+iKaMU7fcQzrewl9S5sWoXjNt6Bw9Pq9MJEOaU0GD1VSrJbqXwenXl8afgYAt1u5N6kLzrtCkW0R8OKu45h+Ee49rwqSEi+8wMzOyPRKb5N5DbDBhRRABzqHiFf2lI3ArmpZkvBG1o9WVvg1Hf+vx1pFUk9b+OKRcTEF56cxvUrjI+glKib4tkdloWQE+OcotIGLAkSJ7wek7u6CeTyutRu0GaF97Sts0Ad2W44WZGpeuLZWqwpGuVxZpb8C6KEBbJUI5PtSKYDwgjXiQk7aQ4pGyUs0iee7xy/7MP/wQaPOUHyfG611Bfow3rE1DnVAKaPLSBODFOGdgFuH63lufG2NodJb1/nxlFzPB6aFnZ6we1VtVFBWfRRgpSL8XrfQys/f1QEkHmMBz4cR+iwyE7H5PpitgDvCEFxddqc6DIF+Dp7oosGE8azVVa3iy8Pl9AEuqOfhbB3j4xY4mWYbbQCI1oi2hlby2ijpJdqUo/tmd04Ukg=
+    secure: hrglE3x4RsOITpA/hUVlm+uvXQEBz3UmjgDyFrgz5L+oxD1HMnnC5dkCDvxUr1w4eYlnWvSekgJGETKE5qHAoFt4wcnNzH0A2jaRDsO2R6G3xdTwA644IAMlwmmyufE26w+uTk87DvZ9jqjoRB1pz+HliERz83XL1YygrkVaa0DEhFamhN/Gn3hAg5/1WHFVew5GS6YkJUiPvQWAWb3jEwqWxjBif/lW7u97Xm87bAPSCIozVCUbF13NE3c9l/Yv0C/YgW82y/NAl1ndM1rcjAxA3hvL7kAWROTfUsCNN0J44oS2wSVO8Oxw7nu0ALjnlBnydqaxhJpErLSr46GPRm1bssyCST6yRpqeKmf1AlQTOL8EeFziJhPgrqY1vrGZ0lPJMlOaAdDSWvaRTGwGqBZNNbS0xOLPH5g5fZ9pni92dg5oMwZfhd3JG4KzoENS0QpVPplVIT9qorzFO2o9iNHiXgR/8Z3BP0nldfj6WH3nDgfo6HAbr0Oex5UzADnHGiJzUfa2d6TU0oO+asX4WwGxWW7tUOOv8eA7wFvxI3T/2la6QRZs+1i9PKdd8WXX86E3l/ikcKcFxB+MxYYw4ABcR7uyZ09+HCQvMNvWTxB9PE7VJv0EISW0ecAdmObaFmKXdNgGTraCqJYOX2847eZRdc6t3+n/Efp/xTmBDZI=
   file: "$HOME/target/*.jar"
   on:
     repo: tetofonta/academy-backend
-    tags: true
-
 notifications:
   slack:
     rooms:
-      - capitanovvio:OzupfbOHX15vJW4vJE1TOIA9#general
+    - capitanovvio:OzupfbOHX15vJW4vJE1TOIA9#general
